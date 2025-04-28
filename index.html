@@ -1,0 +1,38 @@
+<html>
+ <head>
+  <title>Memorama para el segundo parcial</title>
+  
+  <script language="javascript">
+
+   function IniciaJuego(){
+    if(document.forms[0].nombre.value=="")
+     alert("Ingresa tu nombre");
+    else{
+     window.open("board.html?nombre="+document.forms[0].nombre.value+"&tema="+document.forms[0].tema.value,"tablero","width=1000 height=600 top=50 left=0");
+     self.close();
+    }//fin_if
+   }//fin_IniciaJuego
+
+  </script>
+  
+ </head>
+
+ <body bgcolor="yellow" >
+
+  <div align='center'>
+  <font face='comic sans ms' color='blue'/>
+   <h1>Bienvenido</h1> 
+
+   <form id='enviar'>
+   Nombre: <input type="text" id="nombre" size="25" value=""/>
+   Tema: <select name="tema">
+    <option value="0">Halloween</option>
+    <option value="1">Deportes</option>
+    <option value="2">Oficios</option>
+   </select>
+   <br/><br/><button onclick="IniciaJuego()">Iniciar</button>
+   </form>   
+  </div> 
+ </body>
+
+</html>

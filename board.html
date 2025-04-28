@@ -1,0 +1,235 @@
+<html>
+ <head>
+
+  <title>Memorama para el segundo parcial</title>
+
+  <script language="javascript">
+
+   <!--
+   var aux="";
+   aux=unescape(document.location); 
+   
+   var nombre=aux.substring(aux.indexOf("=")+1,aux.indexOf("&"));
+   
+   var tema=parseInt(aux.substring(aux.indexOf("&")+6,aux.length));
+
+      
+   var nums=new Array();
+   var orden=new Array();
+   var prealea=new Array();
+   
+
+   
+   var intentos;
+   var parescorrectos;
+   var puntuacion; 
+   var destapada;
+   
+   
+   InicializarVariables();
+   
+   //document.writeln("<div align='left'>");
+   document.writeln("<font face='comic sans ms' color='black'/>");
+   document.writeln("<h2 align='center'>Memorama</h2><h4 align='center'>Jugador:"+nombre+"</h4>");
+
+   document.writeln("<table width='100%'>");
+   document.writeln("<tr height='25%'>");
+   document.writeln("<td width='12.5%'></td>");
+   document.writeln("<td width='25%'><img name='00' src='24.jpg' width='130' height='97' onclick='ClickImagen(name)'/>:<img name='01' src='24.jpg' width='130' height='97' onclick='ClickImagen(name)'/></td>");
+   document.writeln("<td width='25%'><img name='02' src='24.jpg' width='130' height='97' onclick='ClickImagen(name)'/>:<img name='03' src='24.jpg' width='130' height='97' onclick='ClickImagen(name)'/></td>");
+   document.writeln("<td width='12.5%'></td>");
+   document.writeln("<td width='12.5%' align='center'><button align='center' onclick='VerPuntuaciones()'>Puntuaciones</button></td>");
+   document.writeln("<td width='12.5%'></td>");
+   document.writeln("<td width='12.5%'></td>");
+
+
+   document.writeln("</tr>");
+
+   document.writeln("<tr height='25%'>");
+   document.writeln("<td width='12.5%'></td>");
+   document.writeln("<td width='25%'><img name='04' src='24.jpg' width='130' height='97' onclick='ClickImagen(name)'/>:<img name='05' src='24.jpg' width='130' height='97' onclick='ClickImagen(name)'/></td>");
+   document.writeln("<td width='25%'><img name='06' src='24.jpg' width='130' height='97' onclick='ClickImagen(name)'/>:<img name='07' src='24.jpg' width='130' height='97' onclick='ClickImagen(name)'/></td>");
+   document.writeln("<td width='12.5%'></td>");
+   document.writeln("<td width='12.5%' align='center'><button align='center' onclick='NuevoJuego()'>Volver a jugar</button></td>");
+   document.writeln("<td width='12.5%'></td>");
+
+   document.writeln("<td width='12.5%'></td>");
+
+   document.writeln("</tr>");
+
+   document.writeln("<tr height='25%'>");
+   document.writeln("<td width='12.5%'></td>");
+   document.writeln("<td width='25%'><img name='08' src='24.jpg' width='130' height='97' onclick='ClickImagen(name)'/>:<img name='09' src='24.jpg' width='130' height='97' onclick='ClickImagen(name)'/></td>");
+   document.writeln("<td width='25%'><img name='10' src='24.jpg' width='130' height='97' onclick='ClickImagen(name)'/>:<img name='11' src='24.jpg' width='130' height='97' onclick='ClickImagen(name)'/></td>");
+   document.writeln("<td width='12.5%'></td>");
+   document.writeln("<td width='12.5%' align='center'><button align='center' onclick='VerInstrucciones()'>Instrucciones</button></td>");
+   document.writeln("<td width='12.5%'></td>");
+
+
+   document.writeln("<td width='12.5%'></td>");
+
+   document.writeln("</tr>");
+
+   document.writeln("<tr height='25%'>");
+   document.writeln("<td width='12.5%'></td>");
+   document.writeln("<td width='25%'><img name='12' src='24.jpg' width='130' height='97' onclick='ClickImagen(name)'/>:<img name='13' src='24.jpg' width='130' height='97' onclick='ClickImagen(name)'/></td>");
+   document.writeln("<td width='25%'><img name='14' src='24.jpg' width='130' height='97' onclick='ClickImagen(name)'/>:<img name='15' src='24.jpg' width='130' height='97' onclick='ClickImagen(name)'/></td>");
+   document.writeln("<td width='12.5%'></td>");
+   document.writeln("<td width='12.5%' align='center'><button align='center' onclick='self.close()'>Salir</button></td>");
+   document.writeln("<td width='12.5%'></td>");
+
+
+
+   document.writeln("</tr>");
+
+   document.writeln("</table>");
+
+
+   function agregacero(n){
+    if(n<10)
+     return "0"+n;
+    else
+     return ""+n;
+   }//fin_agregacero
+
+   function ClickImagen(x){
+    var buf=document.images[x].src;
+	buf=buf.substring(buf.lastIndexOf("/")+1,buf.length-4);
+	
+    if(buf=='24'){//Si está cargada la imagen 24 (reverso de tarjeta)
+     document.images[x].src=agregacero(orden[mif(x)])+".jpg";
+     if(destapada==""){
+      destapada=x;
+     }else{
+      if(document.images[destapada].src==document.images[x].src){
+       alert("¡Has formado un par!");
+       parescorrectos++;
+
+      }else{
+       alert("Los últimos dos naipes que volteaste no forman un par");
+       document.images[destapada].src="24.jpg"
+       document.images[x].src="24.jpg"	    
+      }//fin_if 
+      destapada="";
+      intentos++;
+      puntuacion=parseFloat(parescorrectos*100/intentos); 
+      publicar();
+     }//fin_if
+
+     if(parescorrectos==8){
+      alert("Fin del juego.  Su partida será guardada.");
+      GuardarDatos();
+     }//fin_if
+    }//fin_if 
+	
+   }//fin_ClickImagen
+    
+   function GuardarDatos(){
+    window.open("resultados.html?nombre="+nombre+"&intentos="+intentos,"tabla","width=1000 height=600 top=50 left=0");
+   }//fin_GuardarDatos
+ 
+   function mif(x){
+    if(x=='08')
+	 return 8;
+	else 
+     if(x=='09')
+	  return 9; 
+	 else
+	  return parseInt(x); 
+   }//fin_mif  
+
+   function NuevoJuego(){
+    if(confirm("Haz click en aceptar para reiniciar el juego.")){
+     InicializarVariables();
+     VoltearCartas();
+     document.forms[0].intentos.value="0";
+     document.forms[0].correctos.value="0";
+     document.forms[0].puntuacion.value="0";
+    }//fin_if
+   }//fin_NuevoJuego
+   
+   function VerPuntuaciones(){
+    //alert(document.location);
+    //alert("Puntuaciones");
+    window.open("resultados.html","tabla","width=1000 height=600 top=50 left=0");    
+   }//Fin_VerPuntuaciones
+
+   function VerInstrucciones(){
+    window.open("instrucciones.html","ins","width=700, height=500, left=200, top=150, menubar=no, resizable=no");
+
+
+    //alert("Instrucciones");
+   }//Fin-VerInstrucciones
+
+
+
+
+   function VoltearCartas(){
+    var i;
+	for(i=0; i<16; i++){
+	 document.images[i].src="24.jpg";
+	}//fin_for
+   }//fin_VoltearCartas
+   
+   function InicializarVariables(){
+    intentos=0;
+    parescorrectos=0;
+    puntuacion=0; 
+    destapada="";    
+
+    var i;
+    var j;
+    var minv;
+    var Imin;
+	
+    for(i=0; i<16; i++){
+     nums[i]=Math.floor(1+Math.random()*5000);
+     prealea[i]=nums[i];
+    }//fin_for
+	
+    for(i=0; i<16; i++){
+     minv=5001;
+     for(j=0; j<16; j++){
+      if(parseInt(nums[j])<parseInt(minv) && parseInt(nums[j])>0){
+       minv=nums[j];
+       Imin=j;
+      }//fin_if     
+     }//fin_for
+     orden[i]=Imin;
+     nums[Imin]=0;    
+    }//fin_for
+   
+    for(i=0; i<16; i++){
+     if(orden[i]>=8)
+	  orden[i]=orden[i]-8;
+	 orden[i]=orden[i]+8*tema; 
+    }//fin_for	
+   }//fin_InicializarVariables
+  
+
+   function publicar(){
+    document.forms[0].intentos.value=intentos+"";
+    document.forms[0].correctos.value=parescorrectos+"";
+    document.forms[0].puntuacion.value=puntuacion+"";
+   }//fin_publicar
+
+
+   //-->
+  </script>
+
+
+
+ </head>
+
+ <body bgcolor="blue" background="fondo.jpg">
+  <div align='center'>
+   <font face='comic sans ms' color='white'/>
+   <form id='guardable'>
+   Intentos: <input type="text" id="intentos" size="5" value="0" onchange="publicar()"/>
+   Pares correctos: <input type="text" id="correctos" size="5" value="0" onchange="publicar()"/>
+   Puntuación: <input type="text" id="puntuacion" size="5" value="0" onchange="publicar()"/>
+   </form>   
+  </div> 
+ </body>
+
+</html>

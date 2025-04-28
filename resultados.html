@@ -1,0 +1,52 @@
+<html>
+ <head>
+  <title>Puntuaciones</title>
+  <script language="javascript">
+   var galleta;
+   var cont;
+   var registros=new Array();
+
+   var buf=unescape(document.location);
+
+   if(buf.indexOf("?")>-1){   
+    var n;
+    var i;
+    var validez = 3000;
+    var caduca = new Date(); 
+    var ahora =new Date();
+    ahora=ahora.toGMTString();
+    caduca.setTime(caduca.getTime() + (validez*24*60*60*1000));
+    caduca=caduca.toGMTString();
+    n=buf.substring(buf.indexOf("=")+1,buf.indexOf("&"));
+    i=parseInt(buf.substring(buf.indexOf("&")+10,buf.length));
+    document.cookie=escape(n)+"="+i;
+    document.cookie="fecha"+escape(n)+"="+ahora+"; expires="+caduca;
+   }//fin_if
+
+   
+   
+   galleta=unescape(document.cookie);  
+   registros=galleta.split(";");
+   registros[0]=" "+registros[0];
+   var pts;
+   document.writeln("<h1 align='center'><font face='comic sans ms' color='blue'/>Historial de partidas</h1>");
+   document.writeln("<div align='center'><font face='comic sans ms' color='blue'/><table>");
+   document.writeln("<tr><td align='center'><font face='comic sans ms' color='blue'/><b>Nombre</b></td><td align='center'><font face='comic sans ms' color='blue'/><b>Puntuación</b></td><td align='center'><font face='comic sans ms' color='blue'/><b>Fecha</b></td></tr>");
+   for(cont=0; cont<registros.length; cont++){
+    if(cont%2==0){
+     pts=800/parseFloat(registros[cont].substring(registros[cont].indexOf("=")+1,registros[cont].length))+"";
+     pts=pts.substring(0,5);
+     document.writeln("<tr><td><font face='comic sans ms' color='blue'/>"+registros[cont].substring(0,registros[cont].indexOf("="))+"</td><td align='center'><font face='comic sans ms' color='blue'/>"+pts+"</td>");         
+    }else{
+     document.writeln("<td><font face='comic sans ms' color='blue'/>"+registros[cont].substring(registros[cont].indexOf("=")+1,registros[cont].length-13)+"</td></tr>");
+    }//fin_if
+   }//fin_for
+
+   document.writeln("</table></div>");
+   //galleta=registros.join("\n");
+   //alert(galleta);  
+  </script>
+ </head>
+ <body background="winter.jpg">
+ </body> 
+</html>
